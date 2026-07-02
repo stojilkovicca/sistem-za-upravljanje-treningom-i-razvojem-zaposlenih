@@ -1,0 +1,36 @@
+## Visual Studio
+.vs/
+bin/
+obj/
+TestResults/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build rezultati
+Debug/
+Release/
+x64/
+x86/
+
+## NuGet
+*.nupkg
+packages/
+
+## Logs
+*.log
+
+## Baza i lokalni fajlovi
+*.db
+*.db-shm
+*.db-wal
+
+## Operativni sistem
+.DS_Store
+Thumbs.db
+
+## Lokalni razvojni podaci
+appsettings.Development.json
