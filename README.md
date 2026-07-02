@@ -221,4 +221,4 @@ Port se može razlikovati u zavisnosti od lokalnog `launchSettings.json` fajla.
 **Aleksandar Stojilković**
 
 Fakultet organizacionih nauka  
-Predmet: Napredne .Net tehnologije
+Informacioni sistemi i tehnologije
