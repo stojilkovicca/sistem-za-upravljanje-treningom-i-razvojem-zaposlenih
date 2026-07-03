@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Početna";
+}
+
+<div class="mb-4">
+    <h1 class="display-6">
+        Dobro došli, @ViewBag.Ime @ViewBag.Prezime
+    </h1>
+
+    <p class="text-muted">
+        Uloga: <strong>@ViewBag.Uloga</strong>
+        <br />
+        Imejl: @ViewBag.Imejl
+    </p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Zaposleni</h4>
+                <p class="card-text">
+                    Pregled, kreiranje, izmena i brisanje zaposlenih.
+                </p>
+
+                <a asp-controller="Zaposleni"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Otvori
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Predavači</h4>
+                <p class="card-text">
+                    Upravljanje podacima o predavačima.
+                </p>
+
+                <a asp-controller="Predavaci"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Otvori
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Kategorije</h4>
+                <p class="card-text">
+                    Upravljanje kategorijama razvojnih programa.
+                </p>
+
+                <a asp-controller="Kategorije"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Otvori
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Razvojni programi</h4>
+                <p class="card-text">
+                    Pregled, pretraga i upravljanje programima.
+                </p>
+
+                <a asp-controller="RazvojniProgrami"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Otvori
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Prijave</h4>
+                <p class="card-text">
+                    Kreiranje, pregled, obrada i ocenjivanje prijava.
+                </p>
+
+                <a asp-controller="Prijave"
+                   asp-action="Index"
+                   class="btn btn-primary">
+                    Otvori
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">
+                    Izveštaj o svim prijavama
+                </h4>
+
+                <p class="card-text">
+                    Preuzimanje PDF izveštaja koji sadrži sve evidentirane prijave.
+                </p>
+
+                <a asp-controller="Prijave"
+                   asp-action="PreuzmiIzvestaj"
+                   class="btn btn-outline-primary">
+                    Preuzmi izveštaj
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

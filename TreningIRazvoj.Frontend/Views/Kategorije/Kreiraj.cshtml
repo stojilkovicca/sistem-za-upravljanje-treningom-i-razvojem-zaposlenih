@@ -1,0 +1,30 @@
+﻿@model TreningIRazvoj.Frontend.Models.Kategorije.KategorijaProgramaModel
+
+@{
+    ViewData["Title"] = "Dodavanje kategorije";
+}
+
+<h1>Dodavanje kategorije</h1>
+<hr />
+
+<form asp-action="Kreiraj" method="post">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
+    </div>
+
+    <partial name="_Forma" model="Model" />
+
+    <button class="btn btn-primary">Sačuvaj</button>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        Odustani
+    </a>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

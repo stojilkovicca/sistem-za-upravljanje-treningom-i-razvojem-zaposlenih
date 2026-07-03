@@ -1,0 +1,125 @@
+﻿@model TreningIRazvoj.Frontend.Models.RazvojniProgrami.RazvojniProgramModel
+@using TreningIRazvoj.Frontend.Models.RazvojniProgrami
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<div class="row">
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Naziv" class="form-label"></label>
+        <input asp-for="Naziv" class="form-control" />
+        <span asp-validation-for="Naziv" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Vrsta" class="form-label"></label>
+
+        <select asp-for="Vrsta"
+                asp-items="Html.GetEnumSelectList<VrstaProgramaModel>()"
+                class="form-select">
+        </select>
+    </div>
+
+    <div class="col-12 mb-3">
+        <label asp-for="Opis" class="form-label"></label>
+
+        <textarea asp-for="Opis"
+                  class="form-control"
+                  rows="4">
+        </textarea>
+
+        <span asp-validation-for="Opis" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="KategorijaProgramaId"
+               class="form-label">
+        </label>
+
+        <select asp-for="KategorijaProgramaId"
+                asp-items="@(ViewBag.Kategorije as IEnumerable<SelectListItem>)"
+                class="form-select">
+
+            <option value="">Izaberite kategoriju</option>
+        </select>
+
+        <span asp-validation-for="KategorijaProgramaId"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="PredavacId"
+               class="form-label">
+        </label>
+
+        <select asp-for="PredavacId"
+                asp-items="@(ViewBag.Predavaci as IEnumerable<SelectListItem>)"
+                class="form-select">
+
+            <option value="">Izaberite predavača</option>
+        </select>
+
+        <span asp-validation-for="PredavacId"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="DatumPocetka"
+               class="form-label">
+        </label>
+
+        <input asp-for="DatumPocetka"
+               type="date"
+               class="form-control" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="DatumZavrsetka"
+               class="form-label">
+        </label>
+
+        <input asp-for="DatumZavrsetka"
+               type="date"
+               class="form-control" />
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label asp-for="Kapacitet" class="form-label"></label>
+        <input asp-for="Kapacitet" class="form-control" />
+        <span asp-validation-for="Kapacitet" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label asp-for="TrajanjeUSatima"
+               class="form-label">
+        </label>
+
+        <input asp-for="TrajanjeUSatima"
+               class="form-control" />
+
+        <span asp-validation-for="TrajanjeUSatima"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label asp-for="MinimalanBrojPoena"
+               class="form-label">
+        </label>
+
+        <input asp-for="MinimalanBrojPoena"
+               class="form-control" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="form-check mt-4">
+            <input asp-for="Objavljen"
+                   class="form-check-input" />
+
+            <label asp-for="Objavljen"
+                   class="form-check-label">
+            </label>
+        </div>
+    </div>
+</div>

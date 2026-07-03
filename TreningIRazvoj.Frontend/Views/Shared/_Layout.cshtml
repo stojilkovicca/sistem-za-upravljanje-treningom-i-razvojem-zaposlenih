@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Trening i razvoj
+    </title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/TreningIRazvoj.Frontend.styles.css"
+          asp-append-version="true" />
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+
+                <a class="navbar-brand fw-bold"
+                   asp-controller="Pocetna"
+                   asp-action="Index">
+                    Trening i razvoj
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#glavnaNavigacija"
+                        aria-controls="glavnaNavigacija"
+                        aria-expanded="false"
+                        aria-label="Prikaži navigaciju">
+
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse"
+                     id="glavnaNavigacija">
+
+                    @if (!string.IsNullOrWhiteSpace(
+                                        Context.Session.GetString("JwtToken")))
+                    {
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Pocetna"
+                                   asp-action="Index">
+                                    Početna
+                                </a>
+                            </li>
+
+                            @if (Context.Session.GetString("Uloga") == "Administrator")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       asp-controller="Autentifikacija"
+                                       asp-action="Registracija">
+                                        Novi korisnik
+                                    </a>
+                                </li>
+                            }
+
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Zaposleni"
+                                   asp-action="Index">
+                                    Zaposleni
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Predavaci"
+                                   asp-action="Index">
+                                    Predavači
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Kategorije"
+                                   asp-action="Index">
+                                    Kategorije
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="RazvojniProgrami"
+                                   asp-action="Index">
+                                    Programi
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Prijave"
+                                   asp-action="Index">
+                                    Prijave
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <div class="d-flex align-items-center gap-3 text-white">
+
+                            <div class="text-end d-none d-lg-block">
+                                <div class="fw-semibold">
+                                    @Context.Session.GetString("Ime")
+                                    @Context.Session.GetString("Prezime")
+                                </div>
+
+                                <small class="text-white-50">
+                                    @Context.Session.GetString("Uloga")
+                                </small>
+                            </div>
+
+                            <form asp-controller="Autentifikacija"
+                                  asp-action="Odjava"
+                                  method="post"
+                                  class="m-0">
+
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="btn btn-outline-light btn-sm">
+                                    Odjava
+                                </button>
+                            </form>
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow-1">
+        <div class="container py-4">
+
+            @if (TempData["Poruka"] is not null)
+            {
+                <div class="alert alert-success alert-dismissible fade show"
+                     role="alert">
+
+                    @TempData["Poruka"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Zatvori">
+                    </button>
+                </div>
+            }
+
+            @if (TempData["Greska"] is not null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show"
+                     role="alert">
+
+                    @TempData["Greska"]
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Zatvori">
+                    </button>
+                </div>
+            }
+
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="border-top bg-light mt-auto">
+        <div class="container py-4">
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+                    <div class="fw-semibold">
+                        Sistem za upravljanje treningom i razvojem zaposlenih
+                    </div>
+
+                    <div class="text-muted small">
+                        Predmet: Napredne .Net Tehnologije
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <div class="small text-muted">
+                        Aleksandar Stojilković
+                    </div>
+
+                    <div class="small text-muted">
+                        Fakultet organizacionih nauka
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+    @await RenderSectionAsync(
+    "Scripts",
+        required: false)
+</body>
+</html>

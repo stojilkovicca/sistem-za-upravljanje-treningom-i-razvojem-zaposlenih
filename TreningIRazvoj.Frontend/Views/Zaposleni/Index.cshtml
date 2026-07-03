@@ -1,0 +1,125 @@
+﻿@model IEnumerable<TreningIRazvoj.Frontend.Models.Zaposleni.ZaposleniModel>
+
+@{
+    ViewData["Title"] = "Zaposleni";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Zaposleni</h1>
+        <p class="text-muted mb-0">
+            Pregled i upravljanje zaposlenima.
+        </p>
+    </div>
+
+    <div>
+        <a asp-action="Kreiraj"
+           class="btn btn-primary">
+            Dodaj zaposlenog
+        </a>
+
+        <a asp-controller="Pocetna"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Nazad
+        </a>
+    </div>
+</div>
+
+@if (TempData["Poruka"] is not null)
+{
+    <div class="alert alert-success">
+        @TempData["Poruka"]
+    </div>
+}
+
+@if (TempData["Greska"] is not null)
+{
+    <div class="alert alert-danger">
+        @TempData["Greska"]
+    </div>
+}
+
+@if (ViewBag.Greska is not null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Greska
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Nema evidentiranih zaposlenih.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Ime i prezime</th>
+                    <th>Imejl</th>
+                    <th>Radno mesto</th>
+                    <th>Odeljenje</th>
+                    <th>Datum zaposlenja</th>
+                    <th>Aktivan</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var zaposleni in Model)
+                {
+                    <tr>
+                        <td>
+                            @zaposleni.Ime @zaposleni.Prezime
+                        </td>
+
+                        <td>@zaposleni.Imejl</td>
+                        <td>@zaposleni.RadnoMesto</td>
+                        <td>@zaposleni.Odeljenje</td>
+
+                        <td>
+                            @zaposleni.DatumZaposlenja.ToString("dd.MM.yyyy.")
+                        </td>
+
+                        <td>
+                            @if (zaposleni.Aktivan)
+                            {
+                                <span class="badge bg-success">Da</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Ne</span>
+                            }
+                        </td>
+
+                        <td class="text-nowrap">
+                            <a asp-action="Izmeni"
+                               asp-route-id="@zaposleni.Id"
+                               class="btn btn-sm btn-warning">
+                                Izmeni
+                            </a>
+
+                            <form asp-action="Obrisi"
+                                  asp-route-id="@zaposleni.Id"
+                                  method="post"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Da li sigurno želite da obrišete zaposlenog?');">
+
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="btn btn-sm btn-danger">
+                                    Obriši
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,74 @@
+﻿@model TreningIRazvoj.Frontend.Models.Prijave.KreirajPrijavuModel
+
+@{
+    ViewData["Title"] = "Nova prijava";
+}
+
+<h1>Nova prijava</h1>
+
+<p class="text-muted">
+    Izaberite zaposlenog i razvojni program.
+</p>
+
+<hr />
+
+<form asp-action="Kreiraj" method="post">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ZaposleniId"
+               class="form-label">
+        </label>
+
+        <select asp-for="ZaposleniId"
+                asp-items="Model.Zaposleni"
+                class="form-select">
+
+            <option value="">
+                Izaberite zaposlenog
+            </option>
+        </select>
+
+        <span asp-validation-for="ZaposleniId"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="RazvojniProgramId"
+               class="form-label">
+        </label>
+
+        <select asp-for="RazvojniProgramId"
+                asp-items="Model.RazvojniProgrami"
+                class="form-select">
+
+            <option value="">
+                Izaberite razvojni program
+            </option>
+        </select>
+
+        <span asp-validation-for="RazvojniProgramId"
+              class="text-danger">
+        </span>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Kreiraj prijavu
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        Odustani
+    </a>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

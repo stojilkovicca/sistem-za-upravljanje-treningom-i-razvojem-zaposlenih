@@ -77,6 +77,10 @@ Podržane vrste programa:
 
 ### Prijave zaposlenih
 
+Prijavama zaposlenih upravljaju korisnici sa ulogama `Administrator` i `HR`.
+
+Podržane funkcionalnosti:
+
 - prijavljivanje zaposlenog na razvojni program;
 - pregled svih prijava;
 - pregled pojedinačne prijave;
@@ -84,7 +88,7 @@ Podržane vrste programa:
 - evidentiranje završetka programa;
 - unos procenta prisustva;
 - unos broja poena;
-- ocenjivanje završenog programa.
+- unos konačne ocene završenog programa.
 
 Podržani statusi prijave:
 
@@ -104,7 +108,15 @@ Podržane uloge:
 - `HR`
 - `Zaposleni`
 
-Administrator i HR imaju pristup administrativnim funkcionalnostima, dok zaposleni mogu da pristupaju funkcionalnostima vezanim za razvojne programe i prijave.
+Konačna podela ovlašćenja je sledeća:
+
+- `Administrator` ima potpuni pristup sistemu, uključujući registraciju korisničkih naloga;
+- `HR` upravlja zaposlenima, predavačima, kategorijama, razvojnim programima i prijavama zaposlenih;
+- `Zaposleni` ima pristup pregledu razvojnih programa, kategorija programa i predavača, ali nema pristup administrativnom upravljanju prijavama.
+
+Korisnički nalog sa ulogom `Zaposleni` i poslovni entitet `Zaposleni` predstavljaju odvojene delove sistema. U trenutnoj verziji sistema HR i Administrator vode administrativni proces prijavljivanja konkretnih zaposlenih na razvojne programe.
+
+Autorizacija se sprovodi na serverskoj strani korišćenjem atributa `Authorize` i korisničkih uloga. Korisniku koji nema odgovarajuću ulogu API vraća status `403 Forbidden`.
 
 ### PDF izveštaj
 
@@ -121,6 +133,8 @@ Izveštaj sadrži:
 - datum generisanja;
 - numeraciju stranica.
 
+PDF izveštaj obuhvata sve evidentirane prijave i dostupan je korisnicima sa ulogama `Administrator` i `HR`.
+
 ## Validacija i obrada grešaka
 
 Ulazni podaci proveravaju se pomoću biblioteke FluentValidation.
@@ -129,6 +143,7 @@ Implementiran je globalni middleware za obradu izuzetaka koji vraća odgovaraju�
 
 - `400 Bad Request`
 - `401 Unauthorized`
+- `403 Forbidden`
 - `404 Not Found`
 - `500 Internal Server Error`
 

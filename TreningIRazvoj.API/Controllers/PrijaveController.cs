@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using TreningIRazvoj.API.Autorizacija;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TreningIRazvoj.API.Autorizacija;
 using TreningIRazvoj.API.DTO.Prijave;
 using TreningIRazvoj.API.Funkcionalnosti.Prijave.Komande.Kreiranje;
 using TreningIRazvoj.API.Funkcionalnosti.Prijave.Komande.Obrada;
@@ -61,13 +61,8 @@ namespace TreningIRazvoj.API.Controllers
                 nazivFajla);
         }
 
-        
-
-
-
         [HttpGet("{zaposleniId:int}/{razvojniProgramId:int}")]
-        [Authorize(
-            Roles = Uloge.Administrator + "," + Uloge.HR + "," + Uloge.Zaposleni)]
+        [Authorize(Roles = Uloge.Administrator + "," + Uloge.HR)]
         public async Task<ActionResult<PrijavaDTO>> VratiPoId(
             int zaposleniId,
             int razvojniProgramId,
@@ -85,8 +80,7 @@ namespace TreningIRazvoj.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(
-            Roles = Uloge.Administrator + "," + Uloge.HR + "," + Uloge.Zaposleni)]
+        [Authorize(Roles = Uloge.Administrator + "," + Uloge.HR)]
         public async Task<ActionResult<PrijavaDTO>> Kreiraj(
             [FromBody] KreirajPrijavuDTO podaci,
             CancellationToken cancellationToken)
@@ -129,7 +123,7 @@ namespace TreningIRazvoj.API.Controllers
         }
 
         [HttpPut("{zaposleniId:int}/{razvojniProgramId:int}/ocena")]
-        [Authorize(Roles = Uloge.Administrator + "," + Uloge.Zaposleni)]
+        [Authorize(Roles = Uloge.Administrator + "," + Uloge.HR)]
         public async Task<ActionResult<PrijavaDTO>> Oceni(
             int zaposleniId,
             int razvojniProgramId,

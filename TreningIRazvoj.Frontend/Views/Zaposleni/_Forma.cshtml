@@ -1,0 +1,62 @@
+﻿@model TreningIRazvoj.Frontend.Models.Zaposleni.ZaposleniModel
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="Ime" class="form-label"></label>
+        <input asp-for="Ime" class="form-control" />
+        <span asp-validation-for="Ime" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Prezime" class="form-label"></label>
+        <input asp-for="Prezime" class="form-control" />
+        <span asp-validation-for="Prezime" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Imejl" class="form-label"></label>
+        <input asp-for="Imejl" class="form-control" />
+        <span asp-validation-for="Imejl" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="RadnoMesto" class="form-label"></label>
+        <input asp-for="RadnoMesto" class="form-control" />
+        <span asp-validation-for="RadnoMesto"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Odeljenje" class="form-label"></label>
+        <input asp-for="Odeljenje" class="form-control" />
+        <span asp-validation-for="Odeljenje"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="DatumZaposlenja"
+               class="form-label">
+        </label>
+
+        <input asp-for="DatumZaposlenja"
+               type="date"
+               class="form-control" />
+
+        <span asp-validation-for="DatumZaposlenja"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="form-check mt-4">
+            <input asp-for="Aktivan"
+                   class="form-check-input" />
+
+            <label asp-for="Aktivan"
+                   class="form-check-label">
+            </label>
+        </div>
+    </div>
+</div>

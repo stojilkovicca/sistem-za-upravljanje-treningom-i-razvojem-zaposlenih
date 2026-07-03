@@ -1,0 +1,132 @@
+﻿@model IEnumerable<TreningIRazvoj.Frontend.Models.Prijave.PrijavaModel>
+@using TreningIRazvoj.Frontend.Models.Prijave
+
+@{
+    ViewData["Title"] = "Prijave";
+    var uloga = Context.Session.GetString("Uloga");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Prijave</h1>
+        <p class="text-muted mb-0">
+            Pregled i upravljanje prijavama zaposlenih.
+        </p>
+    </div>
+
+    <div>
+        <a asp-action="Kreiraj"
+           class="btn btn-primary">
+            Nova prijava
+        </a>
+
+        @if (uloga == "Administrator" ||
+                uloga == "HR")
+        {
+            <a asp-action="PreuzmiIzvestaj"
+               class="btn btn-outline-primary">
+                Preuzmi PDF
+            </a>
+        }
+
+        <a asp-controller="Pocetna"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Nazad
+        </a>
+    </div>
+</div>
+
+@if (ViewBag.Greska is not null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Greska
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Nema evidentiranih prijava.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Zaposleni</th>
+                    <th>Program</th>
+                    <th>Datum prijave</th>
+                    <th>Status</th>
+                    <th>Prisustvo</th>
+                    <th>Poeni</th>
+                    <th>Ocena</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var prijava in Model)
+                {
+                    <tr>
+                        <td>
+                            @prijava.ImeIPrezimeZaposlenog
+                        </td>
+
+                        <td>
+                            @prijava.NazivRazvojnogPrograma
+                        </td>
+
+                        <td>
+                            @prijava.DatumPrijave.ToString("dd.MM.yyyy.")
+                        </td>
+
+                        <td>
+                            @prijava.Status
+                        </td>
+
+                        <td>
+                            @(prijava.ProcenatPrisustva.HasValue? $"{prijava.ProcenatPrisustva.Value:0.##}%": "-")
+                        </td>
+
+                        <td>
+                            @(prijava.BrojPoena?.ToString() ?? "-")
+                        </td>
+
+                        <td>
+                            @(prijava.OcenaPrograma?.ToString() ?? "-")
+                        </td>
+
+                        <td class="text-nowrap">
+                    @if (uloga == "Administrator" ||
+                                        uloga == "HR")
+                            {
+                                <a asp-action="Obradi"
+                                   asp-route-zaposleniId="@prijava.ZaposleniId"
+                                   asp-route-razvojniProgramId="@prijava.RazvojniProgramId"
+                                   class="btn btn-sm btn-warning">
+                                    Obradi
+                                </a>
+                            }
+
+                            @if ((uloga == "Administrator" ||
+                                                uloga == "Zaposleni") &&
+                                                prijava.Status ==
+                                                StatusPrijaveModel.Zavrsena)
+                            {
+                                <a asp-action="Oceni"
+                                   asp-route-zaposleniId="@prijava.ZaposleniId"
+                                   asp-route-razvojniProgramId="@prijava.RazvojniProgramId"
+                                   class="btn btn-sm btn-primary">
+                                    Oceni
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,39 @@
+﻿@model TreningIRazvoj.Frontend.Models.Zaposleni.ZaposleniModel
+
+@{
+    ViewData["Title"] = "Izmena zaposlenog";
+}
+
+<h1>Izmena zaposlenog</h1>
+
+<hr />
+
+<form asp-action="Izmeni"
+      asp-route-id="@Model.Id"
+      method="post">
+
+    @Html.AntiForgeryToken()
+
+    <input asp-for="Id" type="hidden" />
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
+    </div>
+
+    <partial name="_Forma" model="Model" />
+
+    <button type="submit"
+            class="btn btn-primary">
+        Sačuvaj izmene
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        Odustani
+    </a>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

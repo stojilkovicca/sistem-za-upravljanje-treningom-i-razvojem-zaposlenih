@@ -1,0 +1,97 @@
+﻿@model IEnumerable<TreningIRazvoj.Frontend.Models.Predavaci.PredavacModel>
+
+@{
+    ViewData["Title"] = "Predavači";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Predavači</h1>
+        <p class="text-muted mb-0">
+            Pregled i upravljanje predavačima.
+        </p>
+    </div>
+
+    <div>
+        <a asp-action="Kreiraj" class="btn btn-primary">
+            Dodaj predavača
+        </a>
+
+        <a asp-controller="Pocetna"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Nazad
+        </a>
+    </div>
+</div>
+
+@if (ViewBag.Greska is not null)
+{
+    <div class="alert alert-danger">@ViewBag.Greska</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Nema evidentiranih predavača.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Ime i prezime</th>
+                    <th>Imejl</th>
+                    <th>Oblast stručnosti</th>
+                    <th>Tip</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var predavac in Model)
+                {
+                    <tr>
+                        <td>@predavac.Ime @predavac.Prezime</td>
+                        <td>@predavac.Imejl</td>
+                        <td>@predavac.OblastStrucnosti</td>
+
+                        <td>
+                            @if (predavac.Interni)
+                            {
+                                <span class="badge bg-success">Interni</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Eksterni</span>
+                            }
+                        </td>
+
+                        <td class="text-nowrap">
+                            <a asp-action="Izmeni"
+                               asp-route-id="@predavac.Id"
+                               class="btn btn-sm btn-warning">
+                                Izmeni
+                            </a>
+
+                            <form asp-action="Obrisi"
+                                  asp-route-id="@predavac.Id"
+                                  method="post"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Obrisati predavača?');">
+
+                                @Html.AntiForgeryToken()
+
+                                <button class="btn btn-sm btn-danger">
+                                    Obriši
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,268 @@
+﻿@model TreningIRazvoj.Frontend.Models.RazvojniProgrami.PretragaRazvojnihProgramaModel
+@using TreningIRazvoj.Frontend.Models.RazvojniProgrami
+
+@{
+    ViewData["Title"] = "Razvojni programi";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Razvojni programi</h1>
+        <p class="text-muted mb-0">
+            Pregled, pretraga i upravljanje programima.
+        </p>
+    </div>
+
+    <div>
+        <a asp-action="Kreiraj" class="btn btn-primary">
+            Dodaj program
+        </a>
+
+        <a asp-controller="Pocetna"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Nazad
+        </a>
+    </div>
+</div>
+
+@if (ViewBag.Greska is not null)
+{
+    <div class="alert alert-danger">@ViewBag.Greska</div>
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form asp-action="Index" method="get">
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Pretraga</label>
+                    <input asp-for="Pretraga"
+                           class="form-control"
+                           placeholder="Naziv ili opis programa" />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Vrsta</label>
+
+                    <select asp-for="Vrsta"
+                            asp-items="Html.GetEnumSelectList<VrstaProgramaModel>()"
+                            class="form-select">
+
+                        <option value="">Sve vrste</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Kategorija</label>
+
+                    <select asp-for="KategorijaProgramaId"
+                            asp-items="Model.Kategorije"
+                            class="form-select">
+
+                        <option value="">Sve kategorije</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Predavač</label>
+
+                    <select asp-for="PredavacId"
+                            asp-items="Model.Predavaci"
+                            class="form-select">
+
+                        <option value="">Svi predavači</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Objavljen</label>
+
+                    <select asp-for="Objavljen" class="form-select">
+                        <option value="">Svi</option>
+                        <option value="true">Da</option>
+                        <option value="false">Ne</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Sortiraj po</label>
+
+                    <select asp-for="SortirajPo" class="form-select">
+                        <option value="datumPocetka">Datumu početka</option>
+                        <option value="naziv">Nazivu</option>
+                        <option value="kapacitet">Kapacitetu</option>
+                        <option value="trajanje">Trajanju</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Smer</label>
+
+                    <select asp-for="SmerSortiranja" class="form-select">
+                        <option value="rastuce">Rastuće</option>
+                        <option value="opadajuce">Opadajuće</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Po stranici</label>
+
+                    <select asp-for="VelicinaStranice"
+                            class="form-select">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 d-flex align-items-end gap-2">
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Primeni
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Poništi
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (!Model.Rezultat.Stavke.Any())
+{
+    <div class="alert alert-info">
+        Nema razvojnih programa koji odgovaraju kriterijumima.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Naziv</th>
+                    <th>Vrsta</th>
+                    <th>Kategorija</th>
+                    <th>Predavač</th>
+                    <th>Period</th>
+                    <th>Kapacitet</th>
+                    <th>Objavljen</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var program in Model.Rezultat.Stavke)
+                {
+                    <tr>
+                        <td>
+                            <strong>@program.Naziv</strong>
+                            <div class="small text-muted">
+                                @program.Opis
+                            </div>
+                        </td>
+
+                        <td>@program.Vrsta</td>
+                        <td>@program.NazivKategorije</td>
+                        <td>@program.ImeIPrezimePredavaca</td>
+
+                        <td>
+                            @program.DatumPocetka.ToString("dd.MM.yyyy.")
+                            <br />
+                            @program.DatumZavrsetka.ToString("dd.MM.yyyy.")
+                        </td>
+
+                        <td>@program.Kapacitet</td>
+
+                        <td>
+                            @if (program.Objavljen)
+                            {
+                                <span class="badge bg-success">Da</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Ne</span>
+                            }
+                        </td>
+
+                        <td class="text-nowrap">
+                            <a asp-action="Izmeni"
+                               asp-route-id="@program.Id"
+                               class="btn btn-sm btn-warning">
+                                Izmeni
+                            </a>
+
+                            <form asp-action="Obrisi"
+                                  asp-route-id="@program.Id"
+                                  method="post"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Obrisati razvojni program?');">
+
+                                @Html.AntiForgeryToken()
+
+                                <button class="btn btn-sm btn-danger">
+                                    Obriši
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <span class="text-muted">
+            Ukupno: @Model.Rezultat.UkupanBrojStavki
+        </span>
+
+        <nav>
+            <ul class="pagination mb-0">
+
+                <li class="page-item @(Model.Rezultat.BrojStranice <= 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pretraga="@Model.Pretraga"
+                       asp-route-vrsta="@Model.Vrsta"
+                       asp-route-kategorijaProgramaId="@Model.KategorijaProgramaId"
+                       asp-route-predavacId="@Model.PredavacId"
+                       asp-route-objavljen="@Model.Objavljen"
+                       asp-route-sortirajPo="@Model.SortirajPo"
+                       asp-route-smerSortiranja="@Model.SmerSortiranja"
+                       asp-route-velicinaStranice="@Model.VelicinaStranice"
+                       asp-route-brojStranice="@(Model.Rezultat.BrojStranice - 1)">
+                        Prethodna
+                    </a>
+                </li>
+
+                <li class="page-item disabled">
+                    <span class="page-link">
+                        @Model.Rezultat.BrojStranice /
+                        @Model.Rezultat.UkupanBrojStranica
+                    </span>
+                </li>
+
+                <li class="page-item @(Model.Rezultat.BrojStranice >= Model.Rezultat.UkupanBrojStranica ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pretraga="@Model.Pretraga"
+                       asp-route-vrsta="@Model.Vrsta"
+                       asp-route-kategorijaProgramaId="@Model.KategorijaProgramaId"
+                       asp-route-predavacId="@Model.PredavacId"
+                       asp-route-objavljen="@Model.Objavljen"
+                       asp-route-sortirajPo="@Model.SortirajPo"
+                       asp-route-smerSortiranja="@Model.SmerSortiranja"
+                       asp-route-velicinaStranice="@Model.VelicinaStranice"
+                       asp-route-brojStranice="@(Model.Rezultat.BrojStranice + 1)">
+                        Sledeća
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}

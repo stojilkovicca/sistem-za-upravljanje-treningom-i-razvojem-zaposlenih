@@ -1,0 +1,45 @@
+﻿@model TreningIRazvoj.Frontend.Models.Predavaci.PredavacModel
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="Ime" class="form-label"></label>
+        <input asp-for="Ime" class="form-control" />
+        <span asp-validation-for="Ime" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Prezime" class="form-label"></label>
+        <input asp-for="Prezime" class="form-control" />
+        <span asp-validation-for="Prezime" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="Imejl" class="form-label"></label>
+        <input asp-for="Imejl" class="form-control" />
+        <span asp-validation-for="Imejl" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label asp-for="OblastStrucnosti"
+               class="form-label">
+        </label>
+
+        <input asp-for="OblastStrucnosti"
+               class="form-control" />
+
+        <span asp-validation-for="OblastStrucnosti"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="form-check mt-4">
+            <input asp-for="Interni"
+                   class="form-check-input" />
+
+            <label asp-for="Interni"
+                   class="form-check-label">
+            </label>
+        </div>
+    </div>
+</div>
