@@ -23,12 +23,14 @@ Sistem omogućava evidenciju zaposlenih, predavača, kategorija i razvojnih prog
 
 ## Arhitektura rešenja
 
-Rešenje je podeljeno na četiri projekta:
+Backend deo rešenja podeljen je na četiri projekta:
 
 - `TreningIRazvoj.API` – Web API, kontroleri, DTO klase, validacija, CQRS i servisi
 - `TreningIRazvoj.Domen` – domenski modeli, enumeracije i interfejsi
 - `TreningIRazvoj.Infrastruktura` – Entity Framework Core, repozitorijumi, Identity i pristup bazi
 - `TreningIRazvoj.Testovi` – jedinični testovi
+
+Pored backend projekata, solution sadrži i pomoćni projekat `TreningIRazvoj.Frontend`, koji služi za demonstraciju funkcionalnosti Web API-ja.
 
 ## Funkcionalnosti
 
@@ -163,6 +165,7 @@ Trenutni rezultat:
 ```text
 10 Passed
 0 Failed
+```
 
 ## Pokretanje projekta
 
